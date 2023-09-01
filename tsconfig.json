@@ -7,5 +7,6 @@
     "isolatedModules": true,
     "lib": ["es6", "dom"],
     "typeRoots": ["./node_modules/@types", "./node_modules/@webflow"]
-  }
+  },
+  "include": ["src/**/*.d.ts", "src/**/*.ts", "src/**/*.js", "src/**/*.svelte"]
 }
