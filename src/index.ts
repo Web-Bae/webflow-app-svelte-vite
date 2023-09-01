@@ -1,5 +1,6 @@
 import App from "./App.svelte";
 import "./styles.css";
+import "./webflow.css";
 
 const targetElement = document.querySelector("#app");
 

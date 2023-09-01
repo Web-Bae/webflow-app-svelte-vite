@@ -5,6 +5,7 @@
 <main>
   <h1>Hello {name}!</h1>
   <input bind:value={name} placeholder="Enter your name" />
+  <img src="./jiffpom.jpeg" alt="Jiff Pom" />
 </main>
 
 <style>
