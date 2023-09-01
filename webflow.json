@@ -1,0 +1,5 @@
+{
+  "name": "webflow-app-svelte-vite",
+  "size": "default",
+  "publicDir": "dist"
+}

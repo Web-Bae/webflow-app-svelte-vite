@@ -1,0 +1,20 @@
+{
+  "name": "webflow-app-svelte-vite",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"vite build --watch\" \"webflow extension serve\"",
+    "build": "vite build && webflow extension bundle"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^2.4.5",
+    "@tsconfig/svelte": "^5.0.2",
+    "@webflow/designer-extension-typings": "*",
+    "concurrently": "*",
+    "svelte": "^4.2.0",
+    "typescript": "*",
+    "vite": "^4.4.9"
+  }
+}
