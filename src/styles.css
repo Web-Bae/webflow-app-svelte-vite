@@ -2,6 +2,8 @@ body {
   color: var(--text1);
   font-size: var(--font-size-small);
   font-family: var(--font-stack);
+  margin: 0px;
+  box-sizing: border-box;
 }
 
 button {
@@ -11,6 +13,35 @@ button {
   font: inherit;
   color: inherit;
   padding: 0;
+  white-space: nowrap;
+}
+
+/* Style for select elements */
+select {
+  color: var(--text1);
+  font-size: var(--font-size-small);
+  padding: 4px;
+  border-radius: var(--border-radius, 4px);
+  background: var(
+    --actionSecondaryBackground,
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    ),
+    rgba(255, 255, 255, 0.08)
+  );
+  border: none;
+
+  /* boxShadows-action-secondary */
+  box-shadow: 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.12) inset,
+    0px 0.5px 1px 0px #000;
+}
+
+/* Style for select elements when focused */
+select:focus {
+  outline: none;
+  border: 1px solid var(--blueBorder);
 }
 
 .button-primary {
@@ -20,6 +51,10 @@ button {
   padding: 5px 12px;
   font-size: var(--font-size-large);
   transition: background-color 0.2s ease-in-out;
+}
+
+.button-primary.is-full-width {
+  width: 100%;
 }
 
 .button-primary:hover {
@@ -38,6 +73,126 @@ button {
   ); /* Reset to the original background color */
 }
 
+.button-secondary {
+  color: var(--actionSecondaryText);
+  padding: 2px 8px;
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: var(--border-radius, 4px);
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.1) 100%
+    ),
+    rgba(255, 255, 255, 0.08);
+
+  /* boxShadows-action-secondary */
+  box-shadow: 0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.12) inset,
+    0px 0.5px 1px 0px #000;
+}
+
+.button-secondary:hover {
+  background-color: var(--actionSecondaryBackgroundHover);
+}
+
+.button-secondary.is-small {
+  font-size: var(--font-size-small);
+  padding: 2px 8px;
+}
+
+.button-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed; /* usually to indicate that an action is not permissible */
+}
+
+.button-ghost {
+  color: var(--actionSecondaryText);
+  padding: 4px 8px;
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  transition: background-color 0.2s ease-in-out;
+  /* border-radius: var(--border-radius, 4px); */
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.button-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 h1 {
   font-size: 3rem;
+}
+
+/* override default input number styles  */
+input {
+  background: transparent;
+  border: 1px solid var(--border1);
+  color: var(--text1);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-small);
+  padding: 4px;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid var(--blueBorder);
+}
+
+/* simplebar styles */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background-color: var(--background1);
+  padding: 2px;
+  border-left: 1px solid var(--background1);
+  border-right: 1px solid var(--background1);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: var(--background4);
+  border: none;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--background4);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: var(--background4);
+}
+
+/* simplebar styles */
+.simplebar-track.simplebar-vertical {
+  width: 8px !important;
+}
+
+.simplebar-track.simplebar-horizontal {
+  height: 8px !important;
+}
+
+.simplebar-scrollbar:before {
+  background: var(--text2) !important;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
 }
