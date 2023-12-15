@@ -20,7 +20,7 @@ function getTransformValue(placement: string, isFlipped: boolean) {
   const xDegrees = "0";
   const yDegrees = isFlipped ? "180" : "0";
   const zDegrees = placement === "bottom" ? "180" : "0";
-  return `rotateX(${xDegrees}deg) rotateY(${yDegrees}deg) rotateZ(${zDegrees}deg) scaleZ(1)`;
+  return `rotateX(${xDegrees}deg) rotateY(${yDegrees}deg) rotateZ(${zDegrees}deg)`;
 }
 
 export const svgPropertyMap: Readable<PropertyMap> = derived(
