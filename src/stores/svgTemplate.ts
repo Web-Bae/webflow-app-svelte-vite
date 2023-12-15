@@ -1,7 +1,12 @@
 import { derived, get, type Readable } from "svelte/store";
-import { appState, hexWavePath, wavePath } from "./appState";
+import {
+  appState,
+  hexWavePath,
+  wavePath,
+  sawtoothPath,
+  squareWavePath,
+} from "./appState";
 import { DEFAULT_DIVIDER_STYLE, pathMap } from "../constants"; // Adjust the import path as necessary
-import type { AppState } from "../types";
 
 function getTopValue(placement: string) {
   return placement === "top" ? "0px" : "auto";
@@ -11,8 +16,11 @@ function getBottomValue(placement: string) {
   return placement === "bottom" ? "0px" : "auto";
 }
 
-function getTransformValue(placement: string) {
-  return placement === "bottom" ? "rotate(180deg)" : "rotate(0deg)";
+function getTransformValue(placement: string, isFlipped: boolean) {
+  const xDegrees = "0";
+  const yDegrees = isFlipped ? "180" : "0";
+  const zDegrees = placement === "bottom" ? "180" : "0";
+  return `rotateX(${xDegrees}deg) rotateY(${yDegrees}deg) rotateZ(${zDegrees}deg) scaleZ(1)`;
 }
 
 export const svgPropertyMap: Readable<PropertyMap> = derived(
@@ -22,18 +30,21 @@ export const svgPropertyMap: Readable<PropertyMap> = derived(
       ...DEFAULT_DIVIDER_STYLE.properties,
       top: getTopValue($appState.placement),
       bottom: getBottomValue($appState.placement),
-      transform: getTransformValue($appState.placement),
+      transform: getTransformValue($appState.placement, $appState.isFlipped),
       height: $appState.height + "px",
     };
   }
 );
 
 export const svgString = derived(
-  [appState, wavePath, hexWavePath],
-  ([$appState, $wavePath, $hexWavePath]) => {
+  [appState, wavePath, hexWavePath, sawtoothPath, squareWavePath],
+  ([$appState, $wavePath, $hexWavePath, $sawtoothPath, $squareWavePath]) => {
     const top = getTopValue($appState.placement);
     const bottom = getBottomValue($appState.placement);
-    const rotation = getTransformValue($appState.placement);
+    const rotation = getTransformValue(
+      $appState.placement,
+      $appState.isFlipped
+    );
     const left = 0;
 
     let path = pathMap[$appState.pathName];
@@ -43,6 +54,12 @@ export const svgString = derived(
     }
     if ($appState.pathName === "hexWave") {
       path = $hexWavePath;
+    }
+    if ($appState.pathName === "sawtooth") {
+      path = $sawtoothPath;
+    }
+    if ($appState.pathName === "squareWave") {
+      path = $squareWavePath;
     }
 
     return `

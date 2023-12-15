@@ -1,61 +1,54 @@
 <script lang="ts">
-  import { wavePath } from "./stores/appState";
+  import { squareWavePath } from "./stores/appState";
 
   const width = 1200;
   const height = 120;
   const waveWidth = width;
-  const waveHeight = 0;
   let waveDelta = 120;
-  let speed = 0.7;
-  let wavePoints = 3;
+  let wavePoints = 10; // Number of segments in the square wave
 
   type Point = { x: number; y: number };
 
   let points: Point[] = [];
 
-  function calculateWavePoints(factor = 0) {
-    var points = [{ x: 0, y: waveHeight }];
+  function calculateSquareWavePoints() {
+    var points = [];
+    var y = 0;
 
     for (var i = 0; i <= wavePoints; i++) {
-      var x = (i / wavePoints) * waveWidth;
-      var sinSeed = (factor + (i + (i % wavePoints))) * speed * 100;
-      var sinHeight = Math.sin(sinSeed / 100) * waveDelta;
-      var yPos = Math.sin(sinSeed / 100) * sinHeight + waveHeight;
-      points.push({ x: x, y: yPos });
+      var x = parseFloat(((i / wavePoints) * waveWidth).toFixed(2));
+      points.push({ x, y: parseFloat(y.toFixed(2)) });
+
+      // Flip y between 0 and waveDelta
+      y = y === 0 ? waveDelta : 0;
+
+      // For a square wave, add an extra point to create the vertical line
+      if (i < wavePoints) {
+        points.push({ x, y: parseFloat(y.toFixed(2)) });
+      }
     }
 
     return points;
   }
 
   function buildPath(points: Point[]) {
-    var SVGString = "M 0 -10 L 0 0";
+    var SVGString = `M 0 -10`;
 
-    for (var i = 0; i < points.length - 1; i++) {
-      var cp0x = parseFloat(
-        (points[i].x + (points[i + 1].x - points[i].x) / 3).toFixed(2)
-      );
-      var cp1x = parseFloat(
-        (points[i].x + (2 * (points[i + 1].x - points[i].x)) / 3).toFixed(2)
-      );
-      var pointX = parseFloat(points[i + 1].x.toFixed(2));
-      var pointY = parseFloat(points[i + 1].y.toFixed(2));
-
-      SVGString += ` C ${cp0x} ${parseFloat(
-        points[i].y.toFixed(2)
-      )} ${cp1x} ${pointY} ${pointX} ${pointY}`;
+    for (var i = 0; i < points.length; i++) {
+      SVGString += ` L ${points[i].x} ${points[i].y}`;
     }
 
-    SVGString += ` L ${parseFloat(width.toFixed(2))} 0`;
-    SVGString += ` L ${parseFloat(width.toFixed(2))} -10`;
-    SVGString += " Z";
+    SVGString += ` L ${width} -10`; // Close the path
+
+    SVGString += ` Z`; // Close the path
     return SVGString;
   }
 
   function updatePoints() {
-    points = calculateWavePoints();
+    points = calculateSquareWavePoints();
     const newPath = buildPath(points);
     console.log({ newPath });
-    $wavePath = newPath;
+    $squareWavePath = newPath;
   }
 </script>
 
@@ -75,22 +68,10 @@
 
   <div class="control-item">
     <input
-      id="speed"
-      type="range"
-      step="0.1"
-      min="0"
-      max="3.2"
-      bind:value={speed}
-      on:input={updatePoints}
-    />
-    <label for="speed">Speed: {speed.toFixed(1)}</label>
-  </div>
-  <div class="control-item">
-    <input
       id="wavePoints"
       type="range"
       min="1"
-      max="50"
+      max="100"
       bind:value={wavePoints}
       on:input={updatePoints}
     />
@@ -154,6 +135,6 @@
 
   /* Make it responsive to hover */
   /* input[type="range"]:hover::-webkit-slider-thumb {
-    background:  /* Slightly different color or effect on hover *;
-  } */
+      background:  /* Slightly different color or effect on hover *;
+    } */
 </style>

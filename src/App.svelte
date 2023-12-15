@@ -9,6 +9,8 @@
   import { handleSelectedElementStyle } from "./helpers/handleSelectedElementStyle";
   import DynamicWave from "./DynamicWave.svelte";
   import HexWave from "./HexWave.svelte";
+  import Sawtooth from "./Sawtooth.svelte";
+  import SquareWave from "./SquareWave.svelte";
 
   // variables
   let sectionColor = "#fff";
@@ -75,7 +77,18 @@
           bind:value={$appState.height}
         />
         <!-- color input -->
-        <input type="color" bind:value={$appState.fillColor} />
+        <input
+          class="color-input"
+          type="color"
+          bind:value={$appState.fillColor}
+        />
+        <!-- isFlipped input -->
+        <input
+          type="checkbox"
+          bind:checked={$appState.isFlipped}
+          id="isFlipped"
+        />
+        <label for="isFlipped">Flip</label>
       </div>
       <div class="ui-row">
         {#if $appState.pathName === "wave"}
@@ -83,6 +96,12 @@
         {/if}
         {#if $appState.pathName === "hexWave"}
           <HexWave />
+        {/if}
+        {#if $appState.pathName === "sawtooth"}
+          <Sawtooth />
+        {/if}
+        {#if $appState.pathName === "squareWave"}
+          <SquareWave />
         {/if}
       </div>
     </div>
@@ -194,5 +213,24 @@
     justify-content: end;
     align-items: center;
     padding: 8px;
+  }
+
+  .color-input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    height: 22px;
+    width: 22px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--border1);
+  }
+  input::-webkit-color-swatch-wrapper {
+    padding: 0;
+    margin: 0;
+    background: none;
+  }
+  input::-webkit-color-swatch {
+    border: none;
   }
 </style>

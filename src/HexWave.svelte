@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { pathMap } from "./constants";
   import { hexWavePath } from "./stores/appState";
 
   const width = 1200;
@@ -14,7 +13,7 @@
 
   let points: Point[] = [];
 
-  export function calculateWavePoints(factor = 0) {
+  function calculateWavePoints(factor = 0) {
     var points = [{ x: 0, y: waveHeight }];
 
     for (var i = 0; i <= wavePoints; i++) {
@@ -28,7 +27,7 @@
     return points;
   }
 
-  export function buildPath(points: Point[]) {
+  function buildPath(points: Point[]) {
     var SVGString = "M 0 -10 L 0 0";
 
     for (var i = 0; i < points.length - 1; i++) {
@@ -91,7 +90,7 @@
       id="wavePoints"
       type="range"
       min="1"
-      max="10"
+      max="50"
       bind:value={wavePoints}
       on:input={updatePoints}
     />

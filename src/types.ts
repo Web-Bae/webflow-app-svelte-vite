@@ -1,4 +1,10 @@
-export type PathName = "curve" | "diagonal" | "wave" | "hexWave";
+export type PathName =
+  | "curve"
+  | "diagonal"
+  | "wave"
+  | "hexWave"
+  | "sawtooth"
+  | "squareWave";
 export type Placement = "top" | "bottom";
 export type PathMap = Record<PathName, string>;
 
@@ -11,6 +17,6 @@ export type AppState = {
   height: number;
   placement: Placement;
   pathName: PathName;
-  activePath: string;
   fillColor: string;
+  isFlipped: boolean;
 };
