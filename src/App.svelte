@@ -151,8 +151,7 @@
     color: var(--text1);
   }
 
-  h2,
-  p {
+  h2 {
     margin: 0;
     margin-block: 0;
   }
