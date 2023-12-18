@@ -11,6 +11,9 @@
   import HexWave from "./HexWave.svelte";
   import Sawtooth from "./Sawtooth.svelte";
   import SquareWave from "./SquareWave.svelte";
+  import ButtonGroup from "./ButtonGroup.svelte";
+  import Switch from "./Switch.svelte";
+  import FlipIcon from "./FlipIcon.svelte";
 
   // variables
   let sectionColor = "#fff";
@@ -54,89 +57,101 @@
 </script>
 
 <main>
-  <div class="flex-grow is-ui">
+  <div class="ui-section">
     <div class="flex-col">
-      <div class="ui-row">
-        <!-- select field for path type -->
-        <select bind:value={$appState.pathName}>
-          <!-- options here: loop over pathNameOptions -->
-          {#each pathNameOptions as option}
-            <option value={option.value}>{option.label}</option>
-          {/each}
-        </select>
-        <!-- Select field for placement top/bottom -->
-        <select bind:value={$appState.placement}>
-          {#each placementOptions as option}
-            <option value={option.value}>{option.label}</option>
-          {/each}
-        </select>
-        <!-- number input for height -->
-        <input
-          class="height-input"
-          type="number"
-          bind:value={$appState.height}
-        />
-        <!-- color input -->
-        <input
-          class="color-input"
-          type="color"
-          bind:value={$appState.fillColor}
-        />
-        <!-- isFlipped input -->
-        <input
-          type="checkbox"
-          bind:checked={$appState.isFlipped}
-          id="isFlipped"
-        />
-        <label for="isFlipped">Flip</label>
-      </div>
-      <div class="ui-row">
-        {#if $appState.pathName === "wave"}
-          <DynamicWave />
-        {/if}
-        {#if $appState.pathName === "hexWave"}
-          <HexWave />
-        {/if}
-        {#if $appState.pathName === "sawtooth"}
-          <Sawtooth />
-        {/if}
-        {#if $appState.pathName === "squareWave"}
-          <SquareWave />
-        {/if}
+      Position:
+      <ButtonGroup
+        id="position"
+        buttons={placementOptions}
+        on:select={(e) => ($appState.placement = e.detail)}
+      />
+      <Spacer height="8px" />
+
+      <div class="flex-row">
+        <div class="flex-col">
+          <!-- select field for path type -->
+          Shape:
+          <select bind:value={$appState.pathName}>
+            <!-- options here: loop over pathNameOptions -->
+            {#each pathNameOptions as option}
+              <option value={option.value}>{option.label}</option>
+            {/each}
+          </select>
+        </div>
+        <div class="flex-col">
+          <!-- number input for height -->
+          Height:
+          <input
+            class="height-input"
+            type="number"
+            bind:value={$appState.height}
+          />
+        </div>
+        <div class="vertical-line"></div>
+        <div class="flex-col flex-grow">
+          Settings
+          <div class="flex-row">
+            <!-- color input -->
+            <input
+              class="color-input"
+              type="color"
+              bind:value={$appState.fillColor}
+            />
+            <!-- isFlipped input -->
+            <div class="flex-row">
+              <FlipIcon />
+              <Switch
+                bind:value={$appState.isFlipped}
+                label=""
+                fontSize={10.5}
+                design="slider"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <Spacer height="16px" />
+    {#if $appState.pathName === "wave"}
+      <DynamicWave />
+    {/if}
+    {#if $appState.pathName === "hexWave"}
+      <HexWave />
+    {/if}
+    {#if $appState.pathName === "sawtooth"}
+      <Sawtooth />
+    {/if}
+    {#if $appState.pathName === "squareWave"}
+      <SquareWave />
+    {/if}
   </div>
 
-  <div class="flex-grow">
-    <section class="section" style="background-color: {$appState.fillColor}">
-      <div class="page-padding">
-        <div class="content">
-          <h2>First Section is Bae</h2>
+  <div class="preview-wrap">
+    <div class="preview">
+      <section class="section" style="background-color: {$appState.fillColor}">
+        <div class="page-padding">
+          <div class="content"></div>
         </div>
-      </div>
-    </section>
-    <section class="section is-target">
-      {@html $svgString}
-      <div class="page-padding">
-        <div class="content">
-          <h2>Target Section is Bae</h2>
+      </section>
+      <section class="section is-target">
+        {@html $svgString}
+        <div class="page-padding">
+          <div class="content"></div>
         </div>
-      </div>
-    </section>
-    <section class="section" style="background-color: {$appState.fillColor}">
-      <div class="page-padding">
-        <div class="content">
-          <h2>Next Section is Bae</h2>
+      </section>
+      <section class="section" style="background-color: {$appState.fillColor}">
+        <div class="page-padding">
+          <div class="content"></div>
         </div>
-      </div>
-    </section>
-  </div>
-  <div class="button-wrap">
-    <button
-      class="button-primary"
-      disabled={!$selectedElement || !$selectedElement.children}
-      on:click={handleSubmit}>Create</button
-    >
+      </section>
+    </div>
+    <div class="button-wrap">
+      <button
+        class="button-primary"
+        disabled={!$selectedElement || !$selectedElement.children}
+        on:click={handleSubmit}>Create</button
+      >
+    </div>
   </div>
 </main>
 
@@ -151,14 +166,16 @@
     color: var(--text1);
   }
 
-  h2 {
-    margin: 0;
-    margin-block: 0;
-  }
-
   .content {
     display: flex;
     flex-direction: column;
+    gap: 8px;
+  }
+
+  .ui-section {
+    flex-grow: 0;
+    min-height: 170px;
+    padding: 0.5rem;
     gap: 8px;
   }
 
@@ -166,23 +183,25 @@
     flex-grow: 1;
   }
 
-  .flex-grow.is-ui {
-    flex-grow: 0;
-    min-height: 120px;
+  .flex-row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .flex-col {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
   }
 
-  .ui-row {
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    gap: 8px;
-    padding: 0.5rem;
+  .vertical-line {
+    width: 1px;
+    height: 44px;
+    background-color: white;
+    opacity: 0.5;
   }
 
   .page-padding {
@@ -191,15 +210,16 @@
 
   .section {
     position: relative;
-    padding: 2.5rem 0px;
+    padding: 1rem 0px;
   }
 
   .section.is-target {
-    background-color: #fb5844;
+    padding: 4rem 0px;
+    background-color: transparent;
   }
 
   .height-input {
-    width: 2rem;
+    width: 3rem;
   }
 
   .button-wrap {
@@ -223,6 +243,7 @@
     border-radius: var(--border-radius);
     overflow: hidden;
     border: 1px solid var(--border1);
+    cursor: pointer;
   }
   input::-webkit-color-swatch-wrapper {
     padding: 0;
@@ -231,5 +252,39 @@
   }
   input::-webkit-color-swatch {
     border: none;
+  }
+
+  .preview-wrap {
+    padding: 0.5rem;
+    flex-grow: 1;
+  }
+
+  .preview {
+    border-radius: var(--border-radius);
+    overflow: clip;
+    box-shadow:
+      0px 0.5px 0.5px 0px rgba(255, 255, 255, 0.12) inset,
+      0px 0.5px 1px 0px #000;
+    background-color: #595959;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #696969 25%,
+        transparent 25%,
+        transparent 75%,
+        #696969 75%,
+        #696969
+      ),
+      repeating-linear-gradient(
+        45deg,
+        #696969 25%,
+        #595959 25%,
+        #595959 75%,
+        #696969 75%,
+        #696969
+      );
+    background-position:
+      0 0,
+      6px 6px;
+    background-size: 12px 12px;
   }
 </style>

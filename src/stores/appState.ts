@@ -5,8 +5,8 @@ import { pathMap } from "../constants";
 export const appState = writable<AppState>({
   height: 24,
   placement: "top",
-  pathName: "curve",
-  fillColor: "#4d4d4d",
+  pathName: "wave",
+  fillColor: "#FB5844",
   isFlipped: false,
 });
 

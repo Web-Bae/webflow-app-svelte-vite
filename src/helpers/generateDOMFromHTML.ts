@@ -17,6 +17,8 @@ export const generateDOMFromHTML = async (
         ...get(svgPropertyMap),
       });
       domElement.setStyles([newStyle]);
+    } else if (attr.name === "fill") {
+      domElement.setAttribute("fill", "currentColor");
     } else {
       domElement.setAttribute(attr.name, attr.value);
     }

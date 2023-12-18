@@ -54,6 +54,8 @@
 
 <div class="wave-controls">
   <div class="control-item">
+    <label for="waveDelta">Wave Delta: </label>
+
     <input
       id="waveDelta"
       type="range"
@@ -63,10 +65,11 @@
       bind:value={waveDelta}
       on:input={updatePoints}
     />
-    <label for="waveDelta">Wave Delta: {waveDelta}</label>
+    {waveDelta}
   </div>
 
   <div class="control-item">
+    <label for="wavePoints">Wave Points: </label>
     <input
       id="wavePoints"
       type="range"
@@ -75,66 +78,6 @@
       bind:value={wavePoints}
       on:input={updatePoints}
     />
-    <label for="wavePoints">Wave Points: {wavePoints}</label>
+    {wavePoints}
   </div>
 </div>
-
-<style>
-  .wave-controls {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: start;
-  }
-  .control-item {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: start;
-    gap: 8px;
-  }
-
-  input[type="range"] {
-    -webkit-appearance: none; /* Override default appearance */
-    appearance: none;
-    width: 150px; /* Specific width if needed */
-    background: transparent; /* Make default track invisible */
-    border: none;
-  }
-
-  input[type="range"]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8px;
-    cursor: pointer;
-    border-radius: 1.3px;
-    border: 2px solid rgba(255, 255, 255, 0.13);
-  }
-
-  /* Styles for the thumb */
-  input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 4px; /* Match .slider-thumb width */
-    height: 12px; /* Match .slider-thumb height */
-    background: var(--text1); /* Match .slider-thumb background */
-    cursor: pointer;
-    border-radius: 1px; /* Match .slider-thumb border-radius */
-    transform: translateY(-50%);
-    box-shadow:
-      rgba(0, 0, 0, 0) 0px 0px 0px 1px,
-      rgba(0, 0, 0, 0.3) 0px 0px 0px 0.5px; /* Match .slider-thumb box-shadow */
-  }
-
-  /* Styles for the track */
-  input[type="range"]::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 2px;
-    background: var(--border1); /* Match .slider-track background */
-    border-radius: 4px; /* Match .slider-track border-radius */
-  }
-
-  /* Make it responsive to hover */
-  /* input[type="range"]:hover::-webkit-slider-thumb {
-      background:  /* Slightly different color or effect on hover *;
-    } */
-</style>

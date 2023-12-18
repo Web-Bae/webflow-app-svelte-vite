@@ -28,6 +28,7 @@ export const svgPropertyMap: Readable<PropertyMap> = derived(
   ($appState) => {
     return {
       ...DEFAULT_DIVIDER_STYLE.properties,
+      color: $appState.fillColor,
       top: getTopValue($appState.placement),
       bottom: getBottomValue($appState.placement),
       transform: getTransformValue($appState.placement, $appState.isFlipped),
