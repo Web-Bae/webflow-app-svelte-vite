@@ -9,11 +9,11 @@ import {
 import { DEFAULT_DIVIDER_STYLE, pathMap } from "../constants"; // Adjust the import path as necessary
 
 function getTopValue(placement: string) {
-  return placement === "top" ? "0px" : "auto";
+  return placement === "top" ? "-1px" : "auto";
 }
 
 function getBottomValue(placement: string) {
-  return placement === "bottom" ? "0px" : "auto";
+  return placement === "bottom" ? "-1px" : "auto";
 }
 
 function getTransformValue(placement: string, isFlipped: boolean) {

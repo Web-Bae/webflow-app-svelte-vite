@@ -19,6 +19,8 @@ export const generateDOMFromHTML = async (
       domElement.setStyles([newStyle]);
     } else if (attr.name === "fill") {
       domElement.setAttribute("fill", "currentColor");
+    } else if (attr.name === "style") {
+      // Do nothing - don't include height inline
     } else {
       domElement.setAttribute(attr.name, attr.value);
     }

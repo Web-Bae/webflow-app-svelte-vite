@@ -65,7 +65,7 @@
         buttons={placementOptions}
         on:select={(e) => ($appState.placement = e.detail)}
       />
-      <Spacer height="8px" />
+      <Spacer height="4px" />
 
       <div class="flex-row">
         <div class="flex-col">
@@ -111,7 +111,7 @@
         </div>
       </div>
     </div>
-    <Spacer height="16px" />
+    <Spacer height="12px" />
     {#if $appState.pathName === "wave"}
       <DynamicWave />
     {/if}

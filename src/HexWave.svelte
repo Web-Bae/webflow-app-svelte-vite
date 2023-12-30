@@ -60,7 +60,7 @@
 </script>
 
 <div class="wave-controls">
-  <div class="control-item">
+  <!-- <div class="control-item">
     <label for="waveDelta">Wave Delta: </label>
     <input
       id="waveDelta"
@@ -72,7 +72,7 @@
       on:input={updatePoints}
     />
     {waveDelta}
-  </div>
+  </div> -->
 
   <div class="control-item">
     <label for="speed">Speed: </label>

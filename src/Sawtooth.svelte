@@ -26,13 +26,13 @@
   }
 
   function buildPath(points: Point[]) {
-    var SVGString = `M 0 0`;
+    var SVGString = `M 0 -10`;
 
     for (var i = 1; i < points.length; i++) {
       SVGString += ` L ${points[i].x} ${points[i].y}`;
     }
 
-    SVGString += ` L ${width} 0 Z`;
+    SVGString += ` L ${width} -10 Z`;
     return SVGString;
   }
 
@@ -45,7 +45,7 @@
 </script>
 
 <div class="wave-controls">
-  <div class="control-item">
+  <!-- <div class="control-item">
     <label for="waveDelta">Wave Delta: </label>
     <input
       id="waveDelta"
@@ -57,7 +57,7 @@
       on:input={updatePoints}
     />
     {waveDelta}
-  </div>
+  </div> -->
 
   <div class="control-item">
     <label for="wavePoints">Wave Points: </label>
